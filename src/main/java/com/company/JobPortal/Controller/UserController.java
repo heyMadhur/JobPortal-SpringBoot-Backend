@@ -20,17 +20,14 @@ public class UserController {
         return "User Controller called";
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Users> registerUser(@RequestBody Users user) {
-        Users response= userService.registerUser(user);
+
+    @PostMapping("/profile/update")
+    public ResponseEntity<Users> updateProfile(@RequestBody Users user) {
+        Users response= userService.updateUser(user);
         if(response!=null) {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/profile/update")
-    public ResponseEntity<Users> updateProfile(@RequestBody Profile profile) {
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 

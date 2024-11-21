@@ -19,7 +19,7 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String bio, resumeUrl, resumeOriginalName, profilePhoto;
+    private String bio, resumeUrl, resumeId, resumeOriginalName, profilePhotoUrl, profilePhotoId;
     private List<String> skills;
 
     @OneToMany(fetch = FetchType.EAGER)
