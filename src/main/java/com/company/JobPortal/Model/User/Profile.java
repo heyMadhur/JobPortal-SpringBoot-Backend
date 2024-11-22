@@ -4,6 +4,7 @@ import com.company.JobPortal.Model.Company.Company;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,8 +21,8 @@ public class Profile {
     private Long id;
 
     private String bio, resumeUrl, resumeId, resumeOriginalName, profilePhotoUrl, profilePhotoId;
-    private List<String> skills;
+    private List<String> skills= new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Company> company;
+    private List<Company> company= new ArrayList<>();
 }
