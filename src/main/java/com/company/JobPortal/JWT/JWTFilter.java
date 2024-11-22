@@ -44,18 +44,15 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-//        String authHeader= request.getHeader("Authorization");
         String token=null, username= null;
 
         token= getJwtFromCookie(request);
-
         if(token!=null) {
             username= jwtService.extractUsername(token);
         }
 
         if(username!=null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails= applicationContext.getBean(MyUserDetailService.class).loadUserByUsername(username);
-
             if(jwtService.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken=
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
