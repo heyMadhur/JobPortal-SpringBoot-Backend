@@ -4,6 +4,7 @@ import com.company.JobPortal.DTO.UserInfoDTO;
 import com.company.JobPortal.Model.User.Users;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,15 @@ public class JWTService {
     private final SecretKey SECRET_KEY;
 
     public JWTService(){
-        try{
-            KeyGenerator keyGen= KeyGenerator.getInstance("HmacSHA256");
-            this.SECRET_KEY= keyGen.generateKey();
+        String key= "WmfyV2F5RUxFVmZVc2FjQ1NkR1FkUzJ3cXpCZ2l0eU5xWXZsYkhHb0FlZA==";
+        this.SECRET_KEY= Keys.hmacShaKeyFor(key.getBytes());
 
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+//        try{
+//            KeyGenerator keyGen= KeyGenerator.getInstance("HmacSHA256");
+//            this.SECRET_KEY= keyGen.generateKey();
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public String generateToken(Users user) {
@@ -68,6 +71,7 @@ public class JWTService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
+        System.out.println("Checking Token, Token Username= "+username+", Username= "+userDetails.getUsername()+", isExpired= "+isTokenExpired(token));
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

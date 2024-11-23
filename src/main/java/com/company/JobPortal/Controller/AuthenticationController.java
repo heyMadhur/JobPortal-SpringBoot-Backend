@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin
 public class AuthenticationController {
 
     @Autowired
@@ -78,6 +78,22 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(customResponse, HttpStatus.ACCEPTED);
 
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        ResponseCookie cookie= ResponseCookie.from("token", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(0)
+                .build();
+
+        response.setHeader("Set-Cookie", cookie.toString());
+
+        CustomResponse customResponse= new CustomResponse("Logged out successfully", null, true);
+
+        return new ResponseEntity<>(customResponse, HttpStatus.OK);
     }
 
     @AllArgsConstructor
