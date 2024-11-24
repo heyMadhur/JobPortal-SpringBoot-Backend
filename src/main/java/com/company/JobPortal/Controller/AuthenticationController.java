@@ -4,6 +4,7 @@ import com.company.JobPortal.DTO.LoginUserDTO;
 import com.company.JobPortal.DTO.UserInfoDTO;
 import com.company.JobPortal.Model.User.Profile;
 import com.company.JobPortal.Model.User.Users;
+import com.company.JobPortal.Response.CustomResponse;
 import com.company.JobPortal.Service.AuthService;
 import com.company.JobPortal.Service.Cloudinary.CloudinaryService;
 import com.company.JobPortal.Service.UserService;
@@ -74,7 +75,7 @@ public class AuthenticationController {
         // Add the cookie to the response
         response.addCookie(cookie);
         UserInfoDTO user= new UserInfoDTO(userService.findUserByEmail(loginUser.getEmail()), true);
-        CustomResponse customResponse= new CustomResponse("Welcome " + user.getFullName(), user, true);
+        CustomResponse<UserInfoDTO> customResponse= new CustomResponse<>("Welcome " + user.getFullName(), user, true);
 
         return new ResponseEntity<>(customResponse, HttpStatus.ACCEPTED);
 
@@ -94,16 +95,6 @@ public class AuthenticationController {
         CustomResponse customResponse= new CustomResponse("Logged out successfully", null, true);
 
         return new ResponseEntity<>(customResponse, HttpStatus.OK);
-    }
-
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    static
-    class CustomResponse {
-        String message;
-        UserInfoDTO user;
-        boolean success;
     }
 
 
