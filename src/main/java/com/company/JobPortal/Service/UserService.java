@@ -73,4 +73,13 @@ public class UserService {
         if(user.isPresent()) return user.get();
         throw new UsernameNotFoundException("UserNotFound");
     }
+
+    public Users getUserById(Long id) {
+        Optional<Users> user= userRepo.findById(id);
+        if(user.isPresent()) {
+            return user.get();
+        }
+        return null;
+    }
+
 }

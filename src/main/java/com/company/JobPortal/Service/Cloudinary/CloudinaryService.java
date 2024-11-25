@@ -22,6 +22,8 @@ public class CloudinaryService {
 
             Map<String, String> myRes= new HashMap<>();
 
+            System.out.println("Upload Result= "+uploadResult);
+
             myRes.put("publicId", (String) uploadResult.get("public_id"));
             myRes.put("fileUrl", (String) uploadResult.get("url"));
 
@@ -34,6 +36,7 @@ public class CloudinaryService {
     }
 
     public Map deleteFile(String publicId) {
+        System.out.println("Delete File is called");
         try {
             Map response= cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
 

@@ -6,6 +6,8 @@ import com.company.JobPortal.Model.User.Users;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -25,15 +27,20 @@ public class Job {
 
     private int experienceLevel, position, salary;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "company_id", referencedColumnName = "id", unique = false)
     private Company company;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "created_by_id", referencedColumnName = "id", unique = false)
     private Users createdBy;
 
+    @ElementCollection
     private Set<String> requirements;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Application> applications;
+    private Date date= new Date();
+
+    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Application> applications= new HashSet<>();
 
 }

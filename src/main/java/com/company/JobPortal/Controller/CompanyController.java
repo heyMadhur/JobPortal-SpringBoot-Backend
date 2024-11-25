@@ -68,9 +68,12 @@ public class CompanyController {
         try{
             if (photo != null && !photo.isEmpty()) {
                 Company prev= companyService.getCompanyById(companyId);
-                cloudinaryService.deleteFile(prev.getLogoPublicId());
+                if(prev.getLogoPublicId()!=null) {
+                    cloudinaryService.deleteFile(prev.getLogoPublicId());
+                }
 
                 Map<String, String> res=cloudinaryService.uploadFile(photo);
+                System.out.println("Res= "+res);
                 company.setLogoPublicId(res.get("publicId"));
                 company.setLogoUrl(res.get("fileUrl"));
 
