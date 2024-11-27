@@ -22,10 +22,8 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
-
     @GetMapping("/")
     public String defaultMethod(@RequestParam String keyword){
-        System.out.println("Keyword= "+keyword);
         return "Job Controller called";
     }
 
@@ -41,7 +39,6 @@ public class JobController {
 
     @PostMapping("/post/admin/{adminId}")
     public ResponseEntity<?> postJob(@PathVariable Long adminId, @RequestBody JobPost jobPost){
-        System.out.println("Job Post request Received");
         Job job= jobPost.convertToJob(jobPost);
         Job response= jobService.postJob(job, adminId, jobPost.getCompanyId());
         if(response!=null) {
@@ -52,9 +49,21 @@ public class JobController {
 
     }
 
+    @PutMapping("/update/{jobId}/admin/{adminId}")
+    public ResponseEntity<?> updateJob(@PathVariable Long jobId, @PathVariable Long adminId, @RequestBody JobPost jobPost){
+        System.out.println("Update Job Request Recieived");
+        Job job= jobPost.convertToJob(jobPost);
+        Job response= jobService.updateJob(job, adminId, jobPost.getCompanyId(), jobId);
+        if(response!=null) {
+            CustomResponse<Job> customResponse= new CustomResponse<>("Job Posted", response, true);
+            return new ResponseEntity<>(customResponse, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
     @GetMapping("/get/{jobId}")
     public ResponseEntity<?> getJobById(@PathVariable Long jobId) {
-        System.out.println("Get Job by id Request Recieved, Id= "+jobId);
         Job response= jobService.getJobById(jobId);
         if(response!= null) {
             CustomResponse<Job> finalResponse= new CustomResponse<>("Job Found", response, true);
@@ -65,9 +74,7 @@ public class JobController {
 
     @GetMapping("/user/get-all")
     public ResponseEntity<?> getAllJobsForUser(@RequestParam String keyword) {
-        System.out.println("Get all Jobs Request Received");
         List<Job> response= jobService.getAllSearchedJobs(keyword);
-        System.out.println("Get All Jobs Response= "+response);
         if(response!=null) {
             CustomResponse<List<Job>> customResponse= new CustomResponse<>("Got All Searched Jobs", response, true);
             return new ResponseEntity<>(customResponse, HttpStatus.OK);

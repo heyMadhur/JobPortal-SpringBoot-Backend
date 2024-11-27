@@ -1,5 +1,6 @@
 package com.company.JobPortal.Model.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +17,9 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName, password, role, phoneNumber;
+    private String fullName, role, phoneNumber;
+
+    private String password;
 
     @Column(unique = true)
     private String email;

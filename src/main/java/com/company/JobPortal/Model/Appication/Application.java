@@ -2,9 +2,12 @@ package com.company.JobPortal.Model.Appication;
 
 import com.company.JobPortal.Model.Job.Job;
 import com.company.JobPortal.Model.User.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,15 +21,19 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "job_id")
-    @JsonManagedReference
+    @ToString.Exclude
     private Job job;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Users applicant;
 
+    @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
+
+    private Date date= new Date();
 
 }

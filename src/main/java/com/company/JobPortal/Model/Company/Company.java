@@ -21,6 +21,7 @@ public class Company {
 
     private String companyName, description, website, location, logoUrl, logoPublicId;
 
+    
     private Date date= new Date();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
