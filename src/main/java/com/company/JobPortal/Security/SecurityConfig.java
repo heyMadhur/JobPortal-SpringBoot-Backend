@@ -55,7 +55,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://job-portal-frontend-spring-boot-app.vercel.app"));
         // Allow credentials for secure cross-origin requests
         configuration.setAllowCredentials(true);
         // Allow common HTTP methods
