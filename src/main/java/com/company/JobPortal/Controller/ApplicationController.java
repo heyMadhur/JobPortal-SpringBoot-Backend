@@ -31,7 +31,7 @@ public class ApplicationController {
 
     @GetMapping("/")
     public String defaultMathod(){
-        return "Application Controller called";
+        return "Application Controller called Default";
     }
 
     @GetMapping("/apply/{jobId}/user/{userId}")
