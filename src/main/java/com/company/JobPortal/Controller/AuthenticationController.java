@@ -39,6 +39,7 @@ public class AuthenticationController {
     public ResponseEntity<?> registerUser(
             @ModelAttribute Users user,
             @RequestPart(value = "file", required = false)MultipartFile photo) throws Exception {
+        System.out.println("Register Request Received");
         try{
             if (photo != null && !photo.isEmpty()) {
                 Map<String, String> res=cloudinaryService.uploadFile(photo);
@@ -58,6 +59,11 @@ public class AuthenticationController {
         } catch (Error error) {
             return ResponseEntity.badRequest().body(error.getMessage());
         }
+    }
+
+    @GetMapping("/")
+    public String defaultMathod(){
+        return "Application Controller called Default";
     }
 
     @PostMapping("/login")
